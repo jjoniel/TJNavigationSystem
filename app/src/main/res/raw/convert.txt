@@ -1,0 +1,42 @@
+"Boy's Locker Room" BLOCKER
+"Girl's Locker Room" GLOCKER
+"Nobel Courtyard" COURTE
+"Greenhouse Courtyard" COURTW
+"Cafe Commons" CAFEC
+"Bathroom" BATHROOM
+"Galileo Commons" GALILEO
+"Planetarium" PLANETARIUM
+"Faraday Commons" FARADAY
+"Gym 2" GYM2
+"Gym 1" GYM1
+"Main Gym" GYM1
+"Wrestling Room" WREST
+"Weight Room" WEIGHT
+"Fairfax Buses" FCPS
+"Prince William Buses" PWCS
+"Loudoun Buses" LCPS
+"Art Gallery" ARTGALLERY
+"Auditorium" AUDITORIUM
+"Dome" DOME
+"Main Office" OFFICE
+"Cafeteria" CAFETERIA
+"Da Vinci Commons" DAVINCI
+"Newton Commons" NEWTON
+"Library" LIBRARY
+"Lecture Hall" LHALL
+"Carver Commons" CARVER
+"Student Services" SSERVICES
+"Counselor" SSERVICES
+"Upper Nobel Commons" UNOBEL
+"Nobel Loft" UNOBEL
+"Hopper Commons" HOPPER
+"Physics" HOPPER
+"Einstein Commons" EINSTEIN
+"Chemistry" EINSTEIN
+"Tesla Commons" TESLA
+"Geosystems" TESLA
+"Turing Commons" PEARL
+"IBET" PEARL
+"Computer Systems Lab" 200c
+"CSL" 200c
+"Audlob" AUDLOB
