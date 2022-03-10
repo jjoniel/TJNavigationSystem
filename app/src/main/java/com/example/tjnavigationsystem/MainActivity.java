@@ -67,34 +67,93 @@ public class MainActivity extends AppCompatActivity {
                     Objects.requireNonNull(paths.get(var6.getName())).keySet())
                 for (String var8 :
                         Objects.requireNonNull(paths.get(var6.getName()).get(var7))) {
-                    if (paths.containsKey(var8) && !var5.contains(var8)) {
+                    if (paths.containsKey(var8) && !var5.contains(var8) && (!var8.contains("COURT") || (var1.contains("COURT") || var1.contains("COURT")))) {
                         var3.put(var8, new String[]{var6.getName(), var7});
                         var4.add(new Node(var6.getDistance() + 1, var8));
                     }
                 }
         }
     }
-    public ArrayList<String> displayRoute(@NonNull ArrayList<String[]> var1, String var2) {
+    public ArrayList<String> displayRoute(@NonNull ArrayList<String[]> var1, String var2, String dest) {
         boolean var4 = false;
         ArrayList<String> route = new ArrayList<>();
+        int curr = 0;
         for (String[] var5 : var1) {
+            Log.i("step", var5[0]);
+            Log.i("step", var5[1]);
+            if(var5[1].equals(var2) && curr < (var1.size()-1) && curr>0) {
+                curr++;
+                continue;
+            }
             if (var5[0].contains("STAIR")) {
-                route.add("\nUSE " + var5[0]);
+                route.add("USE " + var5[0]);
                 var4 = true;
             } else if (var5[0].contains("RAMP_")) {
-                route.add("\nFOLLOW THE COURSE OF THE HALL IN FRONT OF YOU");
+                route.add("FOLLOW THE COURSE OF THE HALL IN FRONT OF YOU");
                 var4 = false;
             } else {
-                route.add("\n" + var5[0]);
-                route.add("\n" + turn(var2, var5[1]));
+                if(curr == 0)
+                    route.add("YOU ARE AT " + var5[0]);
+                else
+                    route.add("" + var5[0]);
+                if(curr < (var1.size()-1))
+                    route.add("" + turn(var2, var5[1]));
                 if (var4) {
-                    route.add("\nCONTINUE STRAIGHT");
+                    route.add("CONTINUE STRAIGHT");
                     var4 = false;
                 }
             }
-            var2 = var5[1];
+            if(curr < (var1.size()-1))
+                var2 = var5[1];
+            curr++;
+        }
+        if(!var1.get(var1.size()-1)[0].equals(dest))
+        {
+            String[] last = lastMile(var1.get(var1.size()-1)[0], dest, var2);
+            String way = turn(var2, last[1]);
+            int cut = way.indexOf(" ");
+            route.add("YOUR DESTINATION IS THE " + last[0] + ordinal(last[0]) + " ROOM TO YOUR " + way.substring(cut+1));
         }
         return route;
+    }
+
+    public String ordinal(String x)
+    {
+        if(x.equals("13") || x.equals("12") || x.equals("11"))
+            return "th";
+        switch (x.charAt(x.length()-1))
+        {
+            case '1':
+                return "st";
+            case '2':
+                return "nd";
+            case '3':
+                return "rd";
+        }
+        return "th";
+    }
+
+    public String[] lastMile(String hall, String room, String init)
+    {
+        int x;
+        String d;
+        for (String dir:
+             paths.get(hall).keySet()) {
+            x = 1;
+            d = dir;
+            for (String r:
+                 paths.get(hall).get(dir)) {
+                if(r.equals(room)) {
+                    if(init.equals("N") || init.equals("W"))
+                    {
+                        x = paths.get(hall).get(dir).size()+1 - x;
+                    }
+                    return new String[]{"" + x, d};
+                }
+                x++;
+            }
+        }
+        return null;
     }
 
     public String findRoom(String var1) {
@@ -240,13 +299,10 @@ public class MainActivity extends AppCompatActivity {
         TextView dest = findViewById(R.id.destination);
         String destination = dest.getText().toString();
         if(!(destination.matches("[0-9]+"))) {
-            System.out.println(destination);
             destination = conversion.get(destination);
-            System.out.println(destination);
         }
         dijkstra("NOBEL", destination);
-        System.out.println("ldfoaef");
-        ArrayList<String> route = displayRoute(dijkstra("NOBEL", destination), "E");
+        ArrayList<String> route = displayRoute(dijkstra("NOBEL", destination), "E", destination);
         switchActivities(route);
     }
     private void switchActivities(ArrayList<String> arg) {
