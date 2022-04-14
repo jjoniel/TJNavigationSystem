@@ -1,6 +1,7 @@
 package com.example.tjnavigationsystem;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
     private HashMap<String, HashMap<String, ArrayList<String>>> paths;
     private HashMap<String, String> conversion;
+
 
     public ArrayList<String[]> dijkstra(String var1, String var2) {
         if(!paths.containsKey(var1))
@@ -174,6 +176,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle var1) {
         super.onCreate(var1);
         setContentView(R.layout.activity_main);
+
+        PackageManager m = getPackageManager();
+        if(!m.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS)) {
+            Log.d("COMPASS_SENSOR", "Device has no compass");
+        }
+
         Scanner var3 = new Scanner(getResources().openRawResource(R.raw.paths));
         paths = new HashMap<>();
         int var2;
